@@ -53,6 +53,51 @@ class AuthController {
       res.status(400).send({ message: error.message });
     }
   }
+
+  async checkUser(req, res) {
+    try {
+      const { userId } = req;
+
+      const user = await database.users.findOne({
+        attributes: ["id", "name"],
+        include: [
+          {
+            model: database.roles,
+            as: "rolesOfUser",
+            attributes: ["id", "name"],
+            through: { attributes: [] },
+            include: [
+              {
+                model: database.permissions,
+                as: "permissionsOfRole",
+                attributes: ["id", "name"],
+                through: { attributes: [] },
+              },
+            ],
+          },
+          {
+            model: database.permissions,
+            as: "permissionsOfUser",
+            attributes: ["id", "name"],
+            through: { attributes: [] },
+          },
+        ],
+        where: {
+          id: userId,
+        },
+      });
+      if (!user) {
+        return res.status(404).send({
+          message: "Nenhum usuário foi encontrado com a ID fornecida.",
+        });
+      }
+
+      res.status(200).json({ user });
+    } catch (error) {
+      console.error("error:", error);
+      res.status(400).send({ message: error.message });
+    }
+  }
 }
 
 module.exports = AuthController;

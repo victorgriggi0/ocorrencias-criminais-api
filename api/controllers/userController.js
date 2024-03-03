@@ -14,11 +14,21 @@ class UserController {
             model: database.roles,
             as: "rolesOfUser",
             attributes: ["id", "name"],
+            through: { attributes: [] },
+            include: [
+              {
+                model: database.permissions,
+                as: "permissionsOfRole",
+                attributes: ["id", "name"],
+                through: { attributes: [] },
+              },
+            ],
           },
           {
             model: database.permissions,
             as: "permissionsOfUser",
             attributes: ["id", "name"],
+            through: { attributes: [] },
           },
           {
             model: database.departments,
@@ -56,11 +66,21 @@ class UserController {
             model: database.roles,
             as: "rolesOfUser",
             attributes: ["id", "name"],
+            through: { attributes: [] },
+            include: [
+              {
+                model: database.permissions,
+                as: "permissionsOfRole",
+                attributes: ["id", "name"],
+                through: { attributes: [] },
+              },
+            ],
           },
           {
             model: database.permissions,
             as: "permissionsOfUser",
             attributes: ["id", "name"],
+            through: { attributes: [] },
           },
           {
             model: database.departments,
@@ -100,11 +120,21 @@ class UserController {
             model: database.roles,
             as: "rolesOfUser",
             attributes: ["id", "name"],
+            through: { attributes: [] },
+            include: [
+              {
+                model: database.permissions,
+                as: "permissionsOfRole",
+                attributes: ["id", "name"],
+                through: { attributes: [] },
+              },
+            ],
           },
           {
             model: database.permissions,
             as: "permissionsOfUser",
             attributes: ["id", "name"],
+            through: { attributes: [] },
           },
           {
             model: database.departments,
@@ -112,8 +142,8 @@ class UserController {
             attributes: ["id", "name"],
           },
           {
-            model: database.roles,
-            as: "rolesOfUser",
+            model: database.teams,
+            as: "teamsOfUser",
             attributes: ["id", "name"],
           },
         ],
