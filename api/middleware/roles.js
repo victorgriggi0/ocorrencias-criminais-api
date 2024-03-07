@@ -23,7 +23,7 @@ const roles = (rolesList) => {
     }
 
     const registeredRoles = user.rolesOfUser
-      .map((role) => role.name)
+      .map((role) => role.id)
       .some((role) => rolesList.includes(role));
     if (!registeredRoles) {
       return res.status(403).send({

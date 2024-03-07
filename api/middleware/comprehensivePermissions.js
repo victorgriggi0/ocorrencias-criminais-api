@@ -35,14 +35,14 @@ const comprehensivePermissions = (requiredPermissions) => {
     }
 
     const userPermissions = new Set([
-      ...user.permissionsOfUser.map((p) => p.name),
+      ...user.permissionsOfUser.map((permission) => permission.id),
       ...user.rolesOfUser.flatMap((role) =>
-        role.permissionsOfRole.map((p) => p.name)
+        role.permissionsOfRole.map((permission) => permission.id)
       ),
     ]);
 
-    const hasPermission = requiredPermissions.some((p) =>
-      userPermissions.has(p)
+    const hasPermission = requiredPermissions.some((id) =>
+      userPermissions.has(id)
     );
     if (!hasPermission) {
       return res.status(403).send({

@@ -23,7 +23,7 @@ const permissions = (permissionsList) => {
     }
 
     const registeredPermissions = user.permissionsOfUser
-      .map((permission) => permission.name)
+      .map((permission) => permission.id)
       .some((permission) => permissionsList.includes(permission));
     if (!registeredPermissions) {
       return res.status(403).send({
