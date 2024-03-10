@@ -2,7 +2,7 @@ const database = require("../models");
 
 const roles = (rolesList) => {
   return async (req, res, next) => {
-    const { userId } = req;
+    const { userID } = req;
 
     const user = await database.users.findOne({
       include: [
@@ -13,7 +13,7 @@ const roles = (rolesList) => {
         },
       ],
       where: {
-        id: userId,
+        id: userID,
       },
     });
     if (!user) {

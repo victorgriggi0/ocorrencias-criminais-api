@@ -2,7 +2,7 @@ const database = require("../models");
 
 const comprehensivePermissions = (requiredPermissions) => {
   return async (req, res, next) => {
-    const { userId } = req;
+    const { userID } = req;
 
     const user = await database.users.findOne({
       include: [
@@ -25,7 +25,7 @@ const comprehensivePermissions = (requiredPermissions) => {
         },
       ],
       where: {
-        id: userId,
+        id: userID,
       },
     });
     if (!user) {

@@ -17,10 +17,9 @@ module.exports = async (req, res, next) => {
   try {
     verify(authToken, jsonSecret.secret);
 
-    const { id, email } = decode(authToken);
+    const { userID } = decode(authToken);
 
-    req.userId = id;
-    req.userEmail = email;
+    req.userID = userID;
 
     return next();
   } catch (error) {

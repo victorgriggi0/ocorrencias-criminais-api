@@ -38,8 +38,7 @@ class AuthController {
 
       const authToken = sign(
         {
-          id: user.id,
-          email: user.email,
+          userID: user.id,
         },
         jsonSecret.secret,
         {
@@ -56,7 +55,7 @@ class AuthController {
 
   async checkUser(req, res) {
     try {
-      const { userId } = req;
+      const { userID } = req;
 
       const user = await database.users.findOne({
         attributes: ["id", "name"],
@@ -83,7 +82,7 @@ class AuthController {
           },
         ],
         where: {
-          id: userId,
+          id: userID,
         },
       });
       if (!user) {
