@@ -46,7 +46,27 @@ class AuthController {
         }
       );
 
-      res.status(200).json({ authToken });
+      res.cookie("authToken", authToken, {
+        httpOnly: true,
+        // secure: true,
+        maxAge: 7 * 86400,
+      });
+
+      res.status(200).json({ message: "Sucesso: login efetuado com êxito!" });
+    } catch (error) {
+      console.error("error:", error);
+      res.status(400).send({ message: error.message });
+    }
+  }
+
+  async logout(_, res) {
+    try {
+      res.clearCookie("authToken", {
+        httpOnly: true,
+        // secure: true,
+      });
+
+      res.status(200).send({ message: "Sucesso: logout efetuado com êxito!" });
     } catch (error) {
       console.error("error:", error);
       res.status(400).send({ message: error.message });

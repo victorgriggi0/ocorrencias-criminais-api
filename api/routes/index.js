@@ -1,4 +1,5 @@
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
 const auth = require("./authRoute");
@@ -14,9 +15,14 @@ const occurrence = require("./occurrenceRoute");
 const security = require("./securityRoute");
 const association = require("./associationRoute");
 
-module.exports = (app) => {
-  app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:3001",
+  credentials: true,
+};
 
+module.exports = (app) => {
+  app.use(cors(corsOptions));
+  app.use(cookieParser());
   app.use(bodyParser.json());
 
   app.use(auth);

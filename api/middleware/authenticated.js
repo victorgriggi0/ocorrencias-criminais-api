@@ -1,9 +1,9 @@
-const { verify, decode } = require("jsonwebtoken");
+const { verify } = require("jsonwebtoken");
 
 const jsonSecret = require("../config/jsonSecret");
 
 module.exports = async (req, res, next) => {
-  const token = req.headers.authorization;
+  const token = req.cookies["authToken"];
 
   if (!token) {
     return res.status(401).send({
@@ -12,14 +12,10 @@ module.exports = async (req, res, next) => {
     });
   }
 
-  const [, authToken] = token.split(" ");
-
   try {
-    verify(authToken, jsonSecret.secret);
+    const decoded = verify(token, jsonSecret.secret);
 
-    const { userID } = decode(authToken);
-
-    req.userID = userID;
+    req.userID = decoded.userID;
 
     return next();
   } catch (error) {
